@@ -1,0 +1,15 @@
+{
+    "license": "MIT License",
+    "authors":[
+      {
+        "name": "Iulian Iancu",
+        "email": "iulianiancu@evozon.com"
+      }
+    ],
+    "autoload":{
+      "psr-4": {"": "src/"}
+    },
+    "require": {
+        "symfony/console": "^4.1"
+    }
+}

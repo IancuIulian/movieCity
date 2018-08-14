@@ -1,0 +1,24 @@
+<?php
+
+if (!isset($movies)) {
+    return;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie City</title>
+</head>
+<body>
+    <div>
+        <?php foreach ($movies as $movie) : ?>
+        <div>
+            <?php echo $movie->getName() . " - released in: " . $movie->getYear() . "<br/>"; ?>
+        </div>
+        <?php endforeach;?>
+    </div>
+</body>
+</html>

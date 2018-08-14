@@ -1,0 +1,21 @@
+<?php
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie City</title>
+
+    <link rel="stylesheet" type="text/css" href="../../web/login-me.css">
+</head>
+<body>
+    <?php if (isset($_SESSION['user'])) : ?>
+    <a href="logout">Logout</a>
+    <?php endif; ?>
+    <br/>
+    <p>This will grow into a Movie City site!</p>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+<?php
+echo "<pre>";
+
+if (isset($_SESSION['user'])) {
+    Router::redirect('home');
+}
+
+$error = null;
+if (isset($_POST['email'])){
+    if (Router::login()) {
+        Router::redirect('home');
+    }else{
+        $error ='Incorrect email - password combination.';
+    }
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie City</title>
+
+    <link rel="stylesheet" type="text/css" href="../../web/login-me.css">
+</head>
+<body>
+<h3>Login</h3>
+<form action="" method="POST">
+    <label for="userEmail">Email</label>
+    <input type="text" id="userEmail" name="email">
+    <label for="userPassword">Password</label>
+    <input type="password" id="userPassword" name="password">
+    <input type="submit" value="Login">
+    <?php if (!empty($error)) : ?>
+        <br/><br/>
+        <div><?php print_r($error)?></div>
+    <?php endif;?>
+    <br/><br/>Don't have an account? <a href="register">Register here</a>
+</form>
+
+</body>
+</html>
