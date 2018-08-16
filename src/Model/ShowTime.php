@@ -13,9 +13,8 @@ class ShowTime
     protected $room_id;
 
 
-    public function __construct(int $id, string $date, int $hour, int $movie_id, int $room_id)
+    public function __construct(string $date, int $hour, int $movie_id, int $room_id)
     {
-        $this->id       = $id;
         $this->date     = $date;
         $this->hour     = $hour;
         $this->movie_id = $movie_id;

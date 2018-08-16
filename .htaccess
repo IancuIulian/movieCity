@@ -4,6 +4,7 @@
 #RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule . /index.php [L]
 
+
 RewriteEngine On
 # The following rule tells Apache that if the requested filename
 # exists, simply serve it.

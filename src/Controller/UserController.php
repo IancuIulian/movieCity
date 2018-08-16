@@ -3,58 +3,106 @@ declare(strict_types = 1);
 
 namespace Controller;
 
-use Collection\Collection;
-use Collection\UserCollection;
-use Database\DatabaseConnection;
-use Database\DatabaseHelper;
-use Model\User;
-use Util\Util;
+use Model\Repository\UserRepository;
+use Router;
+use View\View;
 
-class UserController implements IController
+class UserController
 {
-    protected $dbConnection;
 
-    public function __construct(DatabaseConnection $dbConnection)
+    public function login()
     {
-        $this->dbConnection = $dbConnection;
-    }
-
-
-    public function add(Object $user): bool
-    {
-        $dbHelper = new DatabaseHelper($this->dbConnection);
-
-        if (!$dbHelper->validUser($user)){
-            return false;
+        if (isset($_SESSION['user'])) {
+            Router::redirect('home');
         }
 
-        $this->dbConnection->query("INSERT INTO USER (email, password) VALUES (:email, :password);");
-        $this->dbConnection->bind(':email', $user->getEmail());
-        $this->dbConnection->bind(':password', password_hash($user->getPassword(), PASSWORD_BCRYPT));
-        $this->dbConnection->execute();
-        return true;
-    }
+        $error = null;
+        if (isset($_POST['email'])) {
 
-    public function getById(int $id): Object
-    {
-        $this->dbConnection->query("SELECT * FROM USER WHERE id = :id");
-        $this->dbConnection->bind(':id', $id);
-        $result = $this->dbConnection->resultSet();
-        $user = new User($result[0]['email'], $result[0]['password']);
-        $user->setId($id);
-        return $user;
-    }
+            $userRepo = new UserRepository();
 
-    public function getAll(): Collection
-    {
-        $this->dbConnection->query("SELECT * FROM USER;");
-        $result = $this->dbConnection->resultSet();
-        $userCollection = new UserCollection([]);
-        foreach ($result as $userItem){
-            $user = new User($userItem['email'], $userItem['password']);
-            $user->setId($userItem['id']);
-            $userCollection->add($user);
+            $email    = isset($_POST['email']) ? $_POST['email'] : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+            $user = $userRepo->login($email, $password);
+
+            if ($user) {
+                $_SESSION['user'] = $user;
+                Router::redirect('home');
+
+            } else {
+                $error = 'Incorrect email - password combination.';
+            }
         }
-        return $userCollection;
+
+        $loginView = new View('login');
+        return $loginView->render(['error' => $error]);
     }
+
+    public function loginTemplate()
+    {
+        if (isset($_SESSION['user'])) {
+            Router::redirect('home');
+        }
+
+        $error = null;
+        if (isset($_POST['email'])) {
+
+            $userRepo = new UserRepository();
+
+            $email    = isset($_POST['email']) ? $_POST['email'] : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+            $user = $userRepo->login($email, $password);
+
+            if ($user) {
+                $_SESSION['user'] = $user;
+                Router::redirect('home');
+
+            } else {
+                $error = 'Incorrect email - password combination.';
+            }
+        }
+
+        $loginView = new View('login-template');
+        return $loginView->render(['error' => $error]);
+    }
+
+    public function register()
+    {
+        if (isset($_SESSION['user'])) {
+            Router::redirect('home');
+        }
+
+        $error = null;
+        if (isset($_POST['email']) && isset($_POST['password'])) {
+
+            $userRepo = new UserRepository();
+
+            $email    = $_POST['email'];
+            $password = $_POST['password'];
+
+            $user = $userRepo->register($email, $password);
+
+            if ($user) {
+                $_SESSION['user'] = $user;
+                Router::redirect('home');
+
+            } else {
+                $error = 'Chosen email might be invalid or it already exists in our database :(...';
+            }
+        }
+
+        $registerView = new View('register');
+        return $registerView->render(['error' => $error]);
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['user']);
+
+        $loginView = new View('login');
+        return $loginView->render(['error' => null]);
+    }
+
 }

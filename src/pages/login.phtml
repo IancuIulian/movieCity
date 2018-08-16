@@ -1,21 +1,3 @@
-<?php
-echo "<pre>";
-
-if (isset($_SESSION['user'])) {
-    Router::redirect('home');
-}
-
-$error = null;
-if (isset($_POST['email'])){
-    if (Router::login()) {
-        Router::redirect('home');
-    }else{
-        $error ='Incorrect email - password combination.';
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,8 +16,8 @@ if (isset($_POST['email'])){
     <input type="submit" value="Login">
     <?php if (!empty($error)) : ?>
         <br/><br/>
-        <div><?php print_r($error)?></div>
-    <?php endif;?>
+        <div><?php print_r($error) ?></div>
+    <?php endif; ?>
     <br/><br/>Don't have an account? <a href="register">Register here</a>
 </form>
 

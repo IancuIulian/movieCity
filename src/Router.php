@@ -3,38 +3,38 @@ declare(strict_types = 1);
 
 use Controller\FrontController;
 use Controller\UserController;
-use Database\DatabaseConnection;
+
 
 class Router
 {
     public function resolve()
     {
-        $frontController = new FrontController();
+
         switch ($_SERVER['REQUEST_URI']) {
             case '/':
-                $frontController->homePage();
-                break;
+                $frontController = new FrontController();
+                return $frontController->homePage();
             case '/home':
-                $frontController->homePage();
-                break;
+                $frontController = new FrontController();
+                return $frontController->homePage();
             case '/login':
-                $frontController->loginPage();
-                break;
+                $userController = new UserController();
+                return $userController->login();
             case '/login-template':
-                $frontController->loginTemplatePage();
-                break;
+                $userController = new UserController();
+                return $userController->loginTemplate();
             case '/logout':
-                $frontController->logoutPage();
-                break;
+                $userController = new UserController();
+                return $userController->logout();
             case '/register':
-                $frontController->registerPage();
-                break;
+                $userController = new UserController();
+                return $userController->register();
             case '/movies':
-                $frontController->listMovies();
-                break;
+                $frontController = new FrontController();
+                return $frontController->listMovies();
             default:
-                $frontController->error404Page();
-                die();
+                $frontController = new FrontController();
+                return $frontController->error404Page();
         }
     }
 
@@ -45,32 +45,9 @@ class Router
 
     static function redirect(string $to)
     {
-        header('Location: '.$to);
+        header('Location: ' . $to);
         exit;
     }
 
-    static function login(): bool
-    {
-        $dbConnection = new DatabaseConnection();
-        $userController = new UserController($dbConnection);
-        $users = $userController->getAll();
 
-        $email = isset($_POST['email']) ? $_POST['email'] : null;
-        $password = isset($_POST['password']) ? $_POST['password'] : null;
-
-        foreach ($users as $user){
-            if ($user->getEmail() === $email && password_verify($password, $user->getPassword())){
-                $_SESSION['user'] = $user;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    static function logout()
-    {
-        unset($_SESSION['user']);
-        Router::redirect('login');
-    }
 }

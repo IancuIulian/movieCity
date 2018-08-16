@@ -1,11 +1,12 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 require_once 'vendor/autoload.php';
 require_once 'config.php';
 
-$app = new Application();
-//$app->run();
+$app      = new Application();
+$response = $app->run();
+echo $response;
 
 
 

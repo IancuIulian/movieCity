@@ -21,7 +21,7 @@ class View
         ob_start();
         require_once $this->template;
         $output = ob_get_contents();
-//        ob_end_clean();
+        ob_end_clean();
         return $output;
     }
 

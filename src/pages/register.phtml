@@ -1,29 +1,3 @@
-<?php
-
-use Controller\UserController;
-use Database\DatabaseConnection;
-use Model\User;
-
-if (isset($_SESSION['user'])) {
-    Router::redirect('home');
-}
-
-$dbConnection = new DatabaseConnection();
-$userController = new UserController($dbConnection);
-
-$error = null;
-if (isset($_POST['email']) && isset($_POST['password'])){
-    $user = new User($_POST['email'], $_POST['password']);
-
-    if ($userController->add($user)){
-        $_SESSION['user'] = $user;
-        Router::redirect('home');
-    }else{
-        $error ='Chosen email might be invalid or it already exists in our database :(...';
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,8 +14,8 @@ if (isset($_POST['email']) && isset($_POST['password'])){
     <input type="submit" value="Register">
     <?php if (!empty($error)) : ?>
         <br/><br/>
-        <div><?php print_r($error)?></div>
-    <?php endif;?>
+        <div><?php print_r($error) ?></div>
+    <?php endif; ?>
     <br/><br/>Go back to <a href="login">Login</a> page
 </form>
 </body>

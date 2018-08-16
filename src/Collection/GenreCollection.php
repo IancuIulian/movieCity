@@ -11,4 +11,9 @@ class GenreCollection extends Collection
         parent::__construct($items);
     }
 
+    public function add(Object $genre){
+        parent::addItem($genre);
+    }
+
+
 }

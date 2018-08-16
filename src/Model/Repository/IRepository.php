@@ -1,17 +1,18 @@
 <?php
 declare(strict_types = 1);
 
-namespace Controller;
+namespace Model\Repository;
 
 
 use Collection\Collection;
 
-
-interface IController
+interface IRepository
 {
-    function add(Object $object): bool;
+    function insert(Object $object): bool;
 
     function getById(int $id): Object;
+
+    function getByName(string $name): Object;
 
     function getAll(): Collection;
 }

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 
 class Application
@@ -9,13 +9,12 @@ class Application
     public function __construct()
     {
         session_start();
-        $router = new Router();
-        $router->resolve();
     }
 
     public function run()
     {
-//        ???
+        $this->router = new Router();
+        return $this->router->resolve();
     }
 
 }

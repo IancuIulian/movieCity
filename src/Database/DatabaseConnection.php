@@ -68,4 +68,9 @@ class DatabaseConnection
         return $this->statementHandler->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function getHandler(){
+        return $this->dbHandler;
+    }
+
 }

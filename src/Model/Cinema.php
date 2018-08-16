@@ -7,16 +7,50 @@ namespace Model;
 class Cinema
 {
     protected $id;
-    protected $movies;
-    protected $rooms;
+    protected $name;
+//    protected $movies;
+//    protected $rooms;
 
 
-    public function __construct(int $id, string $movies, RoomCollection $rooms)
+    public function __construct(string $name)
     {
-        $this->id     = $id;
-        $this->movies = $movies;
-        $this->rooms  = $rooms;
+        $this->name = $name;
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+
 
 
 }
