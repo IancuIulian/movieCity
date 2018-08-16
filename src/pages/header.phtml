@@ -1,0 +1,16 @@
+<hr>
+<div>
+    <?php if (isset($_SESSION['user'])) : ?>
+        <span style="float: right">
+        <a href="logout">Logout</a>
+    </span>
+    <?php else : ?>
+    <span style="float: right">
+        <a href="login">Login</a>
+    </span>
+    <?php endif; ?>
+    <p style="text-align: center"><b>Movie City</b></p>
+</div>
+<hr>
+<br/>
+

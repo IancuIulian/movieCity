@@ -7,7 +7,7 @@ if (!isset($movieCollection)) {
     $movieCollection = new MovieCollection([]);
 }
 
-if (!isset($showtimeCollection)){
+if (!isset($showtimeCollection)) {
     $showtimeCollection = new ShowTimeCollection([]);
 }
 
@@ -22,30 +22,29 @@ if (!isset($showtimeCollection)){
     <link rel="stylesheet" type="text/css" href="../../web/login-me.css">
 </head>
 <body>
-    <?php if (isset($_SESSION['user'])) : ?>
-    <a href="logout">Logout</a>
-    <?php endif; ?>
-    <br/>
-    <p>Upcoming movies:</p>
-    <div>
-        <ul>
-            <?php foreach ($movieCollection as $movie) : ?>
-                <img src="<?php echo $movie->getImage()?>" style="width: 100px;"><br/>
-                <li>
-                    <?php echo $movie->getName() . " (" . $movie->getYear() . ")";?>
-                    <ul>
-                        <?php foreach ($showtimeCollection as $showtime) : ?>
-                            <?php if ($showtime->getMovieId() === (int)$movie->getId()) : ?>
-                                <li>
-                                    <?php echo $showtime->getDatetime() ?>
-                                </li>
-                            <?php endif;?>
-                        <?php endforeach;?>
-                    </ul>
-                </li><br/>
-            <?php endforeach;?>
-        </ul>
-    </div>
+<?php include 'header.phtml'?>
+<a href="movies">All Movies</a>
+<p>Upcoming movies:</p>
+<div>
+    <ul>
+        <?php foreach ($movieCollection as $movie) : ?>
+            <img src="<?php echo $movie->getImage() ?>" style="width: 100px;"><br/>
+            <li>
+                <?php echo $movie->getName() . " (" . $movie->getYear() . ")"; ?>
+                <ul>
+                    <?php foreach ($showtimeCollection as $showtime) : ?>
+                        <?php if ($showtime->getMovieId() === (int)$movie->getId()) : ?>
+                            <li>
+                                <?php echo $showtime->getDatetime() ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </li><br/>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php include 'footer.phtml'?>
 </body>
 </html>
 

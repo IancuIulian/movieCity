@@ -5,18 +5,21 @@
     <title>Movie City</title>
 </head>
 <body>
-<h3>Register</h3>
-<form action="" method="POST">
-    <label for="userEmail">Email</label>
-    <input type="text" id="userEmail" name="email">
-    <label for="userPassword">Password</label>
-    <input type="password" id="userPassword" name="password">
-    <input type="submit" value="Register">
-    <?php if (!empty($error)) : ?>
-        <br/><br/>
-        <div><?php print_r($error) ?></div>
-    <?php endif; ?>
-    <br/><br/>Go back to <a href="login">Login</a> page
-</form>
+<?php include 'header.phtml' ?>
+<div style="text-align: center">
+    <h3>Register</h3>
+    <form action="" method="POST">
+        <label for="userEmail">Email</label>
+        <input type="text" id="userEmail" name="email">
+        <label for="userPassword">Password</label>
+        <input type="password" id="userPassword" name="password">
+        <input type="submit" value="Register">
+        <?php if (!empty($error)) : ?>
+            <br/><br/>
+            <div><?php print_r($error) ?></div>
+        <?php endif; ?>
+        <br/><br/>Go back to <a href="login">Login</a> page
+    </form>
+</div>
 </body>
 </html>

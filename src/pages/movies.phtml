@@ -15,6 +15,8 @@ if (!isset($movieCollection)) {
     <title>Movie City</title>
 </head>
 <body>
+<?php include 'header.phtml'?>
+<a href="home">Home</a>
 <p>All movies:</p>
 <div>
     <ul>
@@ -26,5 +28,6 @@ if (!isset($movieCollection)) {
         <?php endforeach;?>
     </ul>
 </div>
+<?php include 'footer.phtml'?>
 </body>
 </html>
