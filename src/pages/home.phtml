@@ -1,3 +1,18 @@
+<?php
+
+use Collection\MovieCollection;
+use Collection\ShowTimeCollection;
+
+if (!isset($movieCollection)) {
+    $movieCollection = new MovieCollection([]);
+}
+
+if (!isset($showtimeCollection)){
+    $showtimeCollection = new ShowTimeCollection([]);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +26,26 @@
     <a href="logout">Logout</a>
     <?php endif; ?>
     <br/>
-    <p>This will grow into a Movie City site!</p>
+    <p>Upcoming movies:</p>
+    <div>
+        <ul>
+            <?php foreach ($movieCollection as $movie) : ?>
+                <img src="<?php echo $movie->getImage()?>" style="width: 100px;"><br/>
+                <li>
+                    <?php echo $movie->getName() . " (" . $movie->getYear() . ")";?>
+                    <ul>
+                        <?php foreach ($showtimeCollection as $showtime) : ?>
+                            <?php if ($showtime->getMovieId() === (int)$movie->getId()) : ?>
+                                <li>
+                                    <?php echo $showtime->getDatetime() ?>
+                                </li>
+                            <?php endif;?>
+                        <?php endforeach;?>
+                    </ul>
+                </li><br/>
+            <?php endforeach;?>
+        </ul>
+    </div>
 </body>
 </html>
 

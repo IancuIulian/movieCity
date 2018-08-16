@@ -45,7 +45,7 @@ class MovieRepository implements IRepository
         $this->dbConnection->query("SELECT * FROM movie WHERE name = :name");
         $this->dbConnection->bind(':name', $name);
         $result = $this->dbConnection->resultSet();
-        $movie = new Movie($result[0]['name'], $result[0]['year'], $result[0]['image'], $result[0]['description']);
+        $movie = new Movie($result[0]['name'], (int)$result[0]['year'], $result[0]['image'], $result[0]['description']);
         $movie->setId($result[0]['id']);
 
         return $movie;
@@ -57,7 +57,21 @@ class MovieRepository implements IRepository
         $result = $this->dbConnection->resultSet();
         $movieCollection = new MovieCollection([]);
         foreach ($result as $movieItem){
-            $movie = new Movie($movieItem['name'], $movieItem['year']);
+            $movie = new Movie($movieItem['name'], (int)$movieItem['year'], $movieItem['image'], $movieItem['description']);
+            $movie->setId($movieItem['id']);
+            $movieCollection->add($movie);
+        }
+
+        return $movieCollection;
+    }
+
+    function getUpcoming(): Collection
+    {
+        $this->dbConnection->query("SELECT * FROM movie WHERE id IN (SELECT movie_id FROM showtime where datetime > NOW());");
+        $result = $this->dbConnection->resultSet();
+        $movieCollection = new MovieCollection([]);
+        foreach ($result as $movieItem){
+            $movie = new Movie($movieItem['name'], (int)$movieItem['year'], $movieItem['image'], $movieItem['description']);
             $movie->setId($movieItem['id']);
             $movieCollection->add($movie);
         }

@@ -14,36 +14,44 @@ class Movie
     protected $genres;
 
 
-    public function __construct(){
-        $a = func_get_args();
-        $i = func_num_args();
-        if (method_exists($this, $f='__construct'.$i)){
-            call_user_func_array(array($this, $f),$a);
-        }
-    }
-
-    public function __construct2(string $name, int $year)
-    {
-        $this->name = $name;
-        $this->year = $year;
-        $this->image = '-';
-        $this->description = '';
-    }
-
-    public function __construct3(string $name, int $year, string $description)
-    {
-        $this->name = $name;
-        $this->year = $year;
-        $this->description = $description;
-    }
-
-    public function __construct4(string $name, int $year, string $image, string $description)
+    public function __construct(string $name, int $year, string $image, string $description)
     {
         $this->name = $name;
         $this->year = $year;
         $this->image = $image;
         $this->description = $description;
     }
+
+//    public function __construct(){
+//        $a = func_get_args();
+//        $i = func_num_args();
+//        if (method_exists($this, $f='__construct'.$i)){
+//            call_user_func_array(array($this, $f),$a);
+//        }
+//    }
+//
+//    public function __construct2(string $name, int $year)
+//    {
+//        $this->name = $name;
+//        $this->year = $year;
+//        $this->image = '-';
+//        $this->description = '';
+//    }
+//
+//    public function __construct3(string $name, int $year, string $description)
+//    {
+//        $this->name = $name;
+//        $this->year = $year;
+//        $this->description = $description;
+//    }
+//
+//    public function __construct4(string $name, int $year, string $image, string $description)
+//    {
+//        $this->name = $name;
+//        $this->year = $year;
+//        $this->image = $image;
+//        $this->description = $description;
+//    }
 
     public function getName(): string
     {

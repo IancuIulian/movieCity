@@ -47,17 +47,4 @@ class User
     }
 
 
-    public function bookSeat(Seat $seat)
-    {
-        $seat->book();
-//TODO sterge asta
-//        $ulise = new User('test@tmail.com', 'secret');
-//        $seat1 = new Seat(1, 10);
-//        $ulise->bookSeat($seat1);
-//
-//        var_dump($ulise);
-//        var_dump($seat1);
-    }
-
-
 }

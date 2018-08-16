@@ -13,10 +13,10 @@ class Router
         switch ($_SERVER['REQUEST_URI']) {
             case '/':
                 $frontController = new FrontController();
-                return $frontController->homePage();
+                return $frontController->listUpcomingMovies();
             case '/home':
                 $frontController = new FrontController();
-                return $frontController->homePage();
+                return $frontController->listUpcomingMovies();
             case '/login':
                 $userController = new UserController();
                 return $userController->login();

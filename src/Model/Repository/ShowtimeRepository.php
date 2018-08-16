@@ -40,13 +40,27 @@ class ShowtimeRepository implements IRepository
         return $showtime;
     }
 
+    function getUpcoming(): Collection
+    {
+        $this->dbConnection->query("SELECT * FROM showtime WHERE datetime > NOW();");
+        $result = $this->dbConnection->resultSet();
+        $showtimeCollection = new ShowTimeCollection([]);
+        foreach ($result as $showtimeItem){
+            $showtime = new Showtime($showtimeItem['datetime'], (int)$showtimeItem['movie_id'], (int)$showtimeItem['room_id']);
+            $showtime->setId($showtimeItem['id']);
+            $showtimeCollection->add($showtime);
+        }
+
+        return $showtimeCollection;
+    }
+
     function getAll(): Collection
     {
         $this->dbConnection->query("SELECT * FROM showtime;");
         $result = $this->dbConnection->resultSet();
         $showtimeCollection = new ShowTimeCollection([]);
         foreach ($result as $showtimeItem){
-            $showtime = new Showtime($result[0]['datetime'], $result[0]['movie_id'], $result[0]['room_id']);
+            $showtime = new Showtime($showtimeItem['datetime'], (int)$showtimeItem['movie_id'], (int)$showtimeItem['room_id']);
             $showtime->setId($showtimeItem['id']);
             $showtimeCollection->add($showtime);
         }
