@@ -5,6 +5,10 @@ namespace Admin;
 
 
 use Database\DatabaseConnection;
+use Model\Repository\MovieRepository;
+use Model\Repository\RoomRepository;
+use Model\Repository\ShowtimeRepository;
+use Model\Showtime;
 
 class ShowtimeDefiner
 {
@@ -20,14 +24,20 @@ class ShowtimeDefiner
         $this->adminHelper        = new AdminHelper();
     }
 
-    public function upload() : void
-    {
-        $sql = $this->generateSQL($this->dataArray);
-        $this->pdo->exec($sql);
+    public function insertShowtime(array $entry){
+        $movieRepo = new MovieRepository();
+        $movie     = $movieRepo->getByName($entry['movie']);
+        $roomRepo = new RoomRepository();
+        $room     = $roomRepo->getByName($entry['room']);
+
+        $showtimeRepo = new ShowtimeRepository();
+        $showtime = new Showtime($entry['datetime'], (int)$movie->getId(), (int)$room->getId());
+        $showtimeRepo->insert($showtime);
     }
 
-    private function generateSQL($dataArray) : string
+    public function upload() : void
     {
-        return "INSERT INTO `SHOWTIME` (`movie_id`, `room_id`, `datetime`) VALUES ({$this->pdo->quote($dataArray['movie'])},{$this->pdo->quote($dataArray['room'])},{$this->pdo->quote($dataArray['date'])})";
+        $this->insertShowtime($this->dataArray);
     }
+
 }

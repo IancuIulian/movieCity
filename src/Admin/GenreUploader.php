@@ -23,14 +23,14 @@ class GenreUploader
     public function upload() : void
     {
         $sql = $this->generateSQL($this->dataArray);
-        if ($sql !== "INSERT INTO `GENRE` (`name`) VALUES"){
+        if ($sql !== "INSERT INTO genre (`name`) VALUES"){
             $this->pdo->exec($sql);
         }
     }
 
     private function generateSQL(array $dataArray) : string
     {
-        $sql = "INSERT INTO `GENRE` (`name`) VALUES";
+        $sql = "INSERT INTO genre (`name`) VALUES";
         foreach ($dataArray as $entry) {
             foreach ($entry as $entryValue){
                 if (! $this->adminHelper->genreExists(ucfirst($entryValue))){

@@ -28,36 +28,39 @@ class UserRepository implements IRepository
             return false;
         }
 
-        $this->dbConnection->query("INSERT INTO USER (email, password) VALUES (:email, :password);");
+        $this->dbConnection->query("INSERT INTO user (email, password) VALUES (:email, :password);");
         $this->dbConnection->bind(':email', $user->getEmail());
         $this->dbConnection->bind(':password', password_hash($user->getPassword(), PASSWORD_BCRYPT));
         $this->dbConnection->execute();
+
         return true;
     }
 
     public function getById(int $id): Object
     {
-        $this->dbConnection->query("SELECT * FROM USER WHERE id = :id");
+        $this->dbConnection->query("SELECT * FROM user WHERE id = :id");
         $this->dbConnection->bind(':id', $id);
         $result = $this->dbConnection->resultSet();
         $user   = new User($result[0]['email'], $result[0]['password']);
         $user->setId($id);
+
         return $user;
     }
 
     function getByName(string $name): Object
     {
-        $this->dbConnection->query("SELECT * FROM USER WHERE name = :name");
+        $this->dbConnection->query("SELECT * FROM user WHERE name = :name");
         $this->dbConnection->bind(':name', $name);
         $result = $this->dbConnection->resultSet();
         $user   = new User($result[0]['email'], $result[0]['password']);
         $user->setId($result[0]['id']);
+
         return $user;
     }
 
     public function getAll(): Collection
     {
-        $this->dbConnection->query("SELECT * FROM USER;");
+        $this->dbConnection->query("SELECT * FROM user;");
         $result         = $this->dbConnection->resultSet();
         $userCollection = new UserCollection([]);
         foreach ($result as $userItem) {
@@ -65,6 +68,7 @@ class UserRepository implements IRepository
             $user->setId($userItem['id']);
             $userCollection->add($user);
         }
+
         return $userCollection;
     }
 

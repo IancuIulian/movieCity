@@ -11,4 +11,7 @@ class SeatCollection extends Collection
         parent::__construct($items);
     }
 
+    public function add(Object $seat){
+        parent::addItem($seat);
+    }
 }

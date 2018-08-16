@@ -23,14 +23,14 @@ class MovieUploader
         $this->adminHelper        = new AdminHelper();
     }
 
-    private function insertMovie($entry): void
+    private function insertMovie(array $entry): void
     {
         $movieRepo = new MovieRepository();
         $movie     = new Movie($entry[0], (int)$entry[2], $entry[3], $entry[4]);
         $movieRepo->insert($movie);
     }
 
-    private function insertMovieGenre($entry): void
+    private function insertMovieGenre(array $entry): void
     {
         $movieRepo = new MovieRepository();
         $genreRepo = new GenreRepository();

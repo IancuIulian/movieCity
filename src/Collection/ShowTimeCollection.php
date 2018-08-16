@@ -11,4 +11,8 @@ class ShowTimeCollection extends Collection
         parent::__construct($items);
     }
 
+    public function add(Object $showtime){
+        parent::addItem($showtime);
+    }
+
 }

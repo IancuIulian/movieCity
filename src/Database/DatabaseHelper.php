@@ -79,7 +79,7 @@ class DatabaseHelper
 
     public function addMovieGenre(int $movieId, int $genreId): void
     {
-        $this->dbConnection->query("INSERT INTO GENRE_MOVIE (movie_id, genre_id) VALUES (:movie_id, :genre_id);");
+        $this->dbConnection->query("INSERT INTO genre_movie (movie_id, genre_id) VALUES (:movie_id, :genre_id);");
         $this->dbConnection->bind(':movie_id', $movieId);
         $this->dbConnection->bind(':genre_id', $genreId);
         $this->dbConnection->execute();

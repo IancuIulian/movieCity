@@ -6,7 +6,9 @@ namespace Admin;
 use Database\DatabaseConnection;
 use Model\Repository\CinemaRepository;
 use Model\Repository\RoomRepository;
+use Model\Repository\SeatRepository;
 use Model\Room;
+use Model\Seat;
 
 class RoomUploader
 {
@@ -22,25 +24,26 @@ class RoomUploader
         $this->adminHelper        = new AdminHelper();
     }
 
-    private function insertRoom($entry): void
+    private function insertRoom(array $entry): void
     {
         $roomRepo   = new RoomRepository();
         $cinemaRepo = new CinemaRepository();
         $cinema     = $cinemaRepo->getByName($entry[1]);
         $room       = new Room($entry[0], (int)$cinema->getId());
         $roomRepo->insert($room);
+        $room->setId($roomRepo->getByName($room->getName())->getId());
 
-
-//        $seats = array(
-//            id, row, col, roomId
-//            array('1', '1', '1', $room->getId())
-//        );
-
-//        $seatRepo = new \SeatRepository();
-//        foreach ($seats as $seat) {
-//            $seatObject = new Seat();
-//            $seatRepo->insert($seatObject);
-//        }
+        $seatRepo = new SeatRepository();
+        $seats = explode(' ', $entry[2]);
+        foreach ($seats as $key => $seat){
+            list($row, $col) = explode(',', $seat);
+            $seats[$key] = [
+                'row' => $row,
+                'col' => $col,
+            ];
+            $seatObject = new Seat((int)$seats[$key]['row'], (int)$seats[$key]['col'], (int)$room->getId());
+            $seatRepo->insert($seatObject);
+        }
     }
 
     public function upload(): void

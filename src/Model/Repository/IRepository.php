@@ -12,7 +12,5 @@ interface IRepository
 
     function getById(int $id): Object;
 
-    function getByName(string $name): Object;
-
     function getAll(): Collection;
 }

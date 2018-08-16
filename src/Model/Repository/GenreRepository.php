@@ -20,7 +20,7 @@ class GenreRepository implements IRepository
 
     function insert(Object $genre): bool
     {
-        $this->dbConnection->query("INSERT INTO GENRE (name) VALUES (:name);");
+        $this->dbConnection->query("INSERT INTO genre (name) VALUES (:name);");
         $this->dbConnection->bind(':name', $genre->getName());
         $this->dbConnection->execute();
 
@@ -29,7 +29,7 @@ class GenreRepository implements IRepository
 
     function getById(int $id): Object
     {
-        $this->dbConnection->query("SELECT * FROM GENRE WHERE id = :id");
+        $this->dbConnection->query("SELECT * FROM genre WHERE id = :id");
         $this->dbConnection->bind(':id', $id);
         $result = $this->dbConnection->resultSet();
         $genre = new Genre($result[0]['name']);
@@ -40,7 +40,7 @@ class GenreRepository implements IRepository
 
     function getByName(string $name): Object
     {
-        $this->dbConnection->query("SELECT * FROM GENRE WHERE name = :name");
+        $this->dbConnection->query("SELECT * FROM genre WHERE name = :name");
         $this->dbConnection->bind(':name', $name);
         $result = $this->dbConnection->resultSet();
         $genre = new Genre($result[0]['name']);
@@ -51,7 +51,7 @@ class GenreRepository implements IRepository
 
     function getAll(): Collection
     {
-        $this->dbConnection->query("SELECT * FROM GENRE;");
+        $this->dbConnection->query("SELECT * FROM genre;");
         $result = $this->dbConnection->resultSet();
         $genreCollection = new GenreCollection([]);
         foreach ($result as $genreItem){

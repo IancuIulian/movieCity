@@ -18,7 +18,7 @@ class Room
     {
         $this->name      = $name;
         $this->cinemaId = $cinemaId;
-//        $this->seats     = new SeatCollection();
+        $this->seats     = new SeatCollection([]);
     }
 
     /**

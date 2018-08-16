@@ -100,9 +100,7 @@ class UserController
     public function logout()
     {
         unset($_SESSION['user']);
-
-        $loginView = new View('login');
-        return $loginView->render(['error' => null]);
+        Router::redirect('login');
     }
 
 }

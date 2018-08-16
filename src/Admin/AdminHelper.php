@@ -35,4 +35,5 @@ class AdminHelper
         $roomAsObject = new Room($room[0], (int)$room[1]);
         return $this->dbHelper->roomExists($roomAsObject);
     }
+
 }
